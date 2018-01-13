@@ -1166,6 +1166,10 @@ public:
     return bc_GameController_can_begin_snipe(m_gc, ranger_id, map_location.get_bc());
   }
 
+  bool is_begin_snipe_ready(unsigned ranger_id) const {
+    return bc_GameController_is_begin_snipe_ready(m_gc, ranger_id);
+  }
+
   void begin_snipe(unsigned ranger_id, MapLocation map_location) const {
     bc_GameController_begin_snipe(m_gc, ranger_id, map_location.get_bc());
     CHECK_ERRORS();
