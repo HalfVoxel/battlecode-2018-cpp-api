@@ -59,7 +59,7 @@ static void print_trace() {
   backtrace_symbols_fd(array, size, STDOUT_FILENO);
 }
 #else
-void print_trace() {
+static void print_trace() {
   printf("Compile with -DBACKTRACE to see a backtrace\n");
 }
 #endif
