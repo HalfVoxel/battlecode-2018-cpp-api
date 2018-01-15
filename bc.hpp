@@ -539,14 +539,14 @@ inline bool is_structure(UnitType unit_type) { return unit_type == Factory or un
 inline bool is_robot(UnitType unit_type) { return !is_structure(unit_type); }
 
 /*  */
-static unsigned unit_type_get_factory_cost(UnitType unit_type) {
+inline unsigned unit_type_get_factory_cost(UnitType unit_type) {
   unsigned ans = bc_UnitType_factory_cost(unit_type);
   CHECK_ERRORS();
   return ans;
 }
 
 /*  */
-static unsigned unit_type_get_blueprint_cost(UnitType unit_type) {
+inline unsigned unit_type_get_blueprint_cost(UnitType unit_type) {
   unsigned ans = bc_UnitType_blueprint_cost(unit_type);
   CHECK_ERRORS();
   return ans;
@@ -554,7 +554,7 @@ static unsigned unit_type_get_blueprint_cost(UnitType unit_type) {
 
 // Don't need to receive UnitType as C API, because it makes no sense...
 /*  */
-static unsigned unit_type_get_replicate_cost() {
+inline unsigned unit_type_get_replicate_cost() {
   unsigned ans = bc_UnitType_replicate_cost(Worker);
   CHECK_ERRORS();
   return ans;
