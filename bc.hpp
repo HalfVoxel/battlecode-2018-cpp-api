@@ -580,6 +580,20 @@ public:
     m_unit_type = bc_Unit_unit_type(unit);
   }
 
+#ifndef NO_IMPLICIT_COPIES
+  Unit(const Unit& unit) :
+    m_unit { bc_Unit_clone(unit.m_unit.get()) },
+    m_unit_type { bc_Unit_unit_type(unit.m_unit.get()) }
+  {}
+  Unit(Unit&& unit) = default;
+
+  Unit& operator=(const Unit& unit) {
+    *this = Unit(unit);
+    return *this;
+  }
+  Unit& operator=(Unit&& unit) = default;
+#endif
+
   Unit clone() const {
     return Unit(bc_Unit_clone(m_unit.get()));
   }
@@ -691,6 +705,25 @@ public:
     m_width  = bc_PlanetMap_width_get (m_planet_map.get());
     m_initial_units = to_vector(bc_PlanetMap_initial_units_get(m_planet_map.get()));
   }
+
+#ifndef NO_IMPLICIT_COPIES
+  PlanetMap(const PlanetMap& planet_map) :
+    m_planet_map { bc_PlanetMap_clone(planet_map.m_planet_map.get()) },
+    m_planet { planet_map.m_planet },
+    m_height { planet_map.m_height },
+    m_width { planet_map.m_width },
+    m_initial_units { planet_map.m_initial_units }
+  {}
+
+  PlanetMap(PlanetMap&& planet_map) = default;
+
+  PlanetMap& operator=(const PlanetMap& planet_map) {
+    *this = PlanetMap(planet_map);
+    return *this;
+  }
+
+  PlanetMap& operator=(PlanetMap&& planet_map) = default;
+#endif
 
   PlanetMap clone() const {
     return PlanetMap(bc_PlanetMap_clone(m_planet_map.get()));
