@@ -251,7 +251,7 @@ public:
    * @return the assigned MapLocation
    */
   MapLocation& operator=(const MapLocation& map_location) {
-    *this = std::move(MapLocation(map_location));
+    *this = MapLocation(map_location);
     return *this;
   }
 
@@ -580,17 +580,9 @@ public:
     m_unit_type = bc_Unit_unit_type(unit);
   }
 
-  Unit(const Unit& unit) :
-    m_unit { bc_Unit_clone(unit.m_unit.get()) },
-    m_unit_type { bc_Unit_unit_type(unit.m_unit.get()) }
-  {}
-  Unit(Unit&& unit) = default;
-
-  Unit& operator=(const Unit& unit) {
-    *this = std::move(Unit(unit));
-    return *this;
+  Unit clone() const {
+    return Unit(bc_Unit_clone(m_unit.get()));
   }
-  Unit& operator=(Unit&& unit) = default;
 
   UnitType get_unit_type() const { return m_unit_type; }
 
@@ -691,7 +683,7 @@ class PlanetMap {
 public:
   PlanetMap() : m_planet_map { nullptr } {}
 
-  PlanetMap(bc_PlanetMap* planet_map) : m_planet_map { planet_map } {
+  explicit PlanetMap(bc_PlanetMap* planet_map) : m_planet_map { planet_map } {
     log_error(planet_map, "Null bc_PlanetMap!");
 
     m_planet = bc_PlanetMap_planet_get(m_planet_map.get());
@@ -700,22 +692,9 @@ public:
     m_initial_units = to_vector(bc_PlanetMap_initial_units_get(m_planet_map.get()));
   }
 
-  PlanetMap(const PlanetMap& planet_map) :
-    m_planet_map { bc_PlanetMap_clone(planet_map.m_planet_map.get()) },
-    m_planet { planet_map.m_planet },
-    m_height { planet_map.m_height },
-    m_width { planet_map.m_width },
-    m_initial_units { planet_map.m_initial_units }
-  {}
-
-  PlanetMap(PlanetMap&& planet_map) = default;
-
-  PlanetMap& operator=(const PlanetMap& planet_map) {
-    *this = std::move(PlanetMap(planet_map));
-    return *this;
+  PlanetMap clone() const {
+    return PlanetMap(bc_PlanetMap_clone(m_planet_map.get()));
   }
-
-  PlanetMap& operator=(PlanetMap&& planet_map) = default;
 
   Planet                   get_planet()        const { return m_planet; }
   unsigned                 get_height()        const { return m_height; }
