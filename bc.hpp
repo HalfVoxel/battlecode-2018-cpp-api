@@ -1266,6 +1266,10 @@ public:
     CHECK_ERRORS();
   }
 
+  int get_time_left_ms() const {
+    return bc_GameController_get_time_left_ms(m_gc);
+  }
+
 private:
   bc_GameController* m_gc;
 
