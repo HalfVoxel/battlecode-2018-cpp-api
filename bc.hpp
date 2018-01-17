@@ -34,14 +34,16 @@
 //       So we could use enum classes and functions for these times properly
 
 
-namespace bc {
-
 // Logger
 #ifdef NDEBUG
 #define log_error(condition, message) ((void)0)
 #define CHECK_ERRORS() ((void)0)
 #else
-#ifdef BACKTRACE
+#ifdef CUSTOM_BACKTRACE
+// We expect the code that included this to define their own print_trace
+// function if CUSTOM_BACKTRACE is defined.
+void print_trace();
+#elif defined(BACKTRACE)
 #include <execinfo.h>
 #include <signal.h>
 #include <unistd.h>
@@ -86,6 +88,8 @@ if (bc_has_err()) { \
 }
 
 #endif
+
+namespace bc {
 
 static bool clear_error() {
   if (bc_has_err()) {
