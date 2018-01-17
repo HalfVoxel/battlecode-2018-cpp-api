@@ -1266,14 +1266,6 @@ public:
     CHECK_ERRORS();
   }
 
-  bool is_over() const {
-    return bc_GameController_is_over(m_gc);
-  }
-
-  Team get_winning_team() const {
-    return bc_GameController_winning_team(m_gc);
-  }
-
 private:
   bc_GameController* m_gc;
 
