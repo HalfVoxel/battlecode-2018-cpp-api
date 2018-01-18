@@ -49,7 +49,6 @@ void print_trace();
 #include <unistd.h>
 
 static void print_trace() {
-  fflush(stdout);
   void *array[10];
   size_t size;
 
@@ -58,7 +57,6 @@ static void print_trace() {
 
   // print out all the frames to stderr
   backtrace_symbols_fd(array, size, STDOUT_FILENO);
-  exit(1);
 }
 #else
 void print_trace() {
@@ -73,6 +71,7 @@ void print_trace() {
 #define log_error(condition, message)   \
 if (!(condition)) {           \
   printf("[info] " __FILE__ ": " S__LINE__ ": " message "\n"); \
+  fflush(stdout); \
   print_trace(); \
   exit(1); \
 }
@@ -83,6 +82,7 @@ if (bc_has_err()) { \
   uint8_t code = bc_get_last_err(&err); \
   printf("[ERROR](" __FILE__ ": " S__LINE__ ") code %d: %s\n", code, err); \
   bc_free_string(err); \
+  fflush(stdout); \
   print_trace(); \
   exit(1); \
 }
