@@ -307,19 +307,6 @@ public:
    */
   void set_planet(Planet planet) { m_planet = planet; }
 
-  /**
-   * Set the x coordinate of the map location
-   * @param x
-   */
-  void set_x(int x) { m_x = x; }
-
-  /**
-   * Set the y coordinate of the map location
-   * @param y
-   */
-  void set_y(int y) { m_y = y; }
-
-
   /*
    * Returns the map location one square from this one in the given direction.
    * @param direction
