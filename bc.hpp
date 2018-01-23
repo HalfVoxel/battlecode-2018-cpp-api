@@ -91,7 +91,7 @@ if (bc_has_err()) { \
 
 namespace bc {
 
-static bool clear_error() {
+inline bool clear_error() {
   if (bc_has_err()) {
     char* err;
     bc_get_last_err(&err);
@@ -1002,14 +1002,8 @@ public:
 
   unsigned get_karbonite() const { return bc_GameController_karbonite(m_gc); }
 
-  // Not in C API
-  bool has_unit(unsigned id) const {
-    clear_error();
-    bc_Unit* unit = bc_GameController_unit(m_gc, id);
-    bool exists = !clear_error();
-    if (exists) delete_bc_Unit(unit);
-    return exists;
-  }
+  // Not in C API, deprecated
+  bool has_unit(unsigned id) const { return can_sense_unit(id); }
 
   Unit get_unit(unsigned id) const {
     bc_Unit* unit = bc_GameController_unit(m_gc, id);
